@@ -1,0 +1,11 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run LÖVE",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "& \"C:/Program Files/LOVE/love.exe\" \"${workspaceFolder}\""
+    }
+  ]
+}
