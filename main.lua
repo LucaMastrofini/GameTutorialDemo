@@ -1,6 +1,10 @@
 function love.load()
     anim8 = require 'libraries/anim8'
+    sti = require 'libraries/sti'
+    gameMap = sti('maps/mapDemo.lua')  -- loading the map created with Tiled
     love.graphics.setDefaultFilter('nearest', 'nearest') -- set nearest neighbor filtering on upscaling and downscaling to prevent blurriness
+
+    
     player = {}
     player.x = 400
     player.y = 300
@@ -59,6 +63,6 @@ function love.update(dt)
 end
 
 function love.draw()
-    love.graphics.draw(background, 0, 0)
-    player.anim:draw(player.spriteSheet, player.x, player.y, nil, 10)  -- source / position x / position y / rotation / scale x / scale y
+    gameMap:draw()
+    player.anim:draw(player.spriteSheet, player.x, player.y, nil, 6)  -- source / position x / position y / rotation / scale x / scale y
 end 
