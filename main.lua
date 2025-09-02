@@ -7,6 +7,8 @@ function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest') -- set nearest neighbor filtering on upscaling and downscaling to prevent blurriness
     wf = require 'libraries/windfield'  -- include the windfield library
     world = wf.newWorld(0, 0) -- gravity (x, y)
+    world:addCollisionClass('Player')
+    world:addCollisionClass('Wall')
     player = {}
     player.collider = world:newBSGRectangleCollider(400, 250, 50, 100, 10) -- x, y, width, height, border radius
 
@@ -36,6 +38,7 @@ function love.load()
         for i, obj in pairs(gameMap.layers["Walls"].objects) do
             local wall = world:newRectangleCollider(obj.x, obj.y, obj.width, obj.height)
             wall:setType('static')  -- make the wall static so it doesn't move when colliding with something
+            wall:setCollisionClass('Wall')
             table.insert(walls, wall)  -- insert the wall into the walls table
         end
     end
@@ -45,6 +48,13 @@ function love.load()
     sounds.blip = love.audio.newSource("sounds/blip.wav", "static")  -- loading a sound effect
     sounds.music = love.audio.newSource("sounds/music.mp3", "stream")  -- loading a music track
     sounds.music:setLooping(true)  -- set the music to loop
+    sounds.music:play()
+
+  
+
+    player.collider:setCollisionClass('Player')
+
+        
 end
 
 function love.update(dt)
@@ -106,6 +116,10 @@ function love.update(dt)
     world:update(dt)  -- updating the physics world
     player.x = player.collider:getX()
     player.y = player.collider:getY()
+
+    if player.collider:enter('Wall') then
+        sounds.blip:play()
+    end
 
 end
 
